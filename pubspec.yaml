@@ -17,6 +17,10 @@ dependencies:
   # by annotating Dart classes.
   json_serializable: ^3.2.2
 
+  # A simple yet fully customizable ratingbar for flutter which also
+  # include a rating bar indicator, supporting any fraction of rating.
+  flutter_rating_bar: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

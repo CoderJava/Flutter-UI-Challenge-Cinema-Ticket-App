@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_ui_cinemax/res/color_app.dart';
 import 'package:flutter_ui_cinemax/src/model/banner/banner_movie.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -22,9 +24,28 @@ class DetailScreen extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: <Widget>[
-                WavyHeaderImage(bannerMovie.backdropPath),
+                BackdropImage(bannerMovie.backdropPath),
                 _buildWidgetAppBar(mediaQuery),
+                _buildWidgetFloatingActionButton(mediaQuery),
+                _buildWidgetIconBuyAndShare(mediaQuery),
               ],
+            ),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  _buildWidgetTitleMovie(context),
+                  SizedBox(height: 4.0),
+                  _buildWidgetGenreMovie(context),
+                  SizedBox(height: 16.0),
+                  _buildWidgetRating(),
+                  SizedBox(height: 16.0),
+                  _buildWidgetShortDescriptionMovie(context),
+                  SizedBox(height: 16.0),
+                  _buildWidgetSynopsisMovie(context),
+                  SizedBox(height: 16.0),
+                  _buildWidgetScreenshots(mediaQuery, context),
+                ],
+              ),
             ),
           ],
         ),
@@ -60,12 +81,258 @@ class DetailScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildWidgetFloatingActionButton(MediaQueryData mediaQuery) {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: mediaQuery.size.height / 2 - 60),
+        Center(
+          child: FloatingActionButton(
+            onPressed: () {
+              // TODO: do something in here
+            },
+            child: Icon(
+              Icons.play_arrow,
+              color: ColorApp.primaryDarkColor,
+              size: 32.0,
+            ),
+            backgroundColor: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWidgetIconBuyAndShare(MediaQueryData mediaQuery) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: mediaQuery.size.height / 2 - 40,
+          ),
+          Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Icon(Icons.add),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.share),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWidgetTitleMovie(BuildContext context) {
+    return Center(
+      child: Text(
+        'Angel Has Fallen',
+        style: Theme.of(context).textTheme.title,
+      ),
+    );
+  }
+
+  Widget _buildWidgetGenreMovie(BuildContext context) {
+    return Center(
+      child: Text(
+        'Action',
+        style: Theme.of(context).textTheme.subtitle.merge(
+              TextStyle(color: Colors.grey),
+            ),
+      ),
+    );
+  }
+
+  Widget _buildWidgetRating() {
+    return Center(
+      child: RatingBar(
+        initialRating: 4.0,
+        itemCount: 5,
+        allowHalfRating: true,
+        direction: Axis.horizontal,
+        itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+        itemBuilder: (BuildContext context, int index) {
+          return Icon(
+            Icons.star,
+            color: ColorApp.primaryDarkColor,
+          );
+        },
+        tapOnlyMode: true,
+        itemSize: 24.0,
+        unratedColor: Colors.black,
+        onRatingUpdate: (rating) {
+          /* Nothing to do in here */
+        },
+      ),
+    );
+  }
+
+  Widget _buildWidgetShortDescriptionMovie(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Country\n',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                ),
+                TextSpan(
+                  text: 'USA',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Year\n',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                ),
+                TextSpan(
+                  text: '2018',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Lenght\n',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                ),
+                TextSpan(
+                  text: '112 min',
+                  style: Theme.of(context).textTheme.subtitle.merge(
+                        TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWidgetSynopsisMovie(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Center(
+        child: Text(
+          'Secret Service Agent Mike Banning is framed for the attempted '
+          'assassination of the President and must evade his own agency '
+          'and the FBI as he tries to uncover the real threat.',
+          textAlign: TextAlign.justify,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWidgetScreenshots(
+      MediaQueryData mediaQuery, BuildContext context) {
+    var listScreenshotsMovie = [
+      'assets/images/screenshot_1_backdrop_path.jpeg',
+      'assets/images/screenshot_2_backdrop_path.jpeg',
+      'assets/images/screenshot_3_backdrop_path.jpeg',
+      'assets/images/screenshot_4_backdrop_path.jpeg',
+      'assets/images/screenshot_5_backdrop_path.jpeg',
+    ];
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Screenshots',
+                  style: Theme.of(context).textTheme.subhead.merge(
+                        TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                ),
+              ),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Container(
+          width: mediaQuery.size.width,
+          height: 100.0,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: 16.0,
+                  right: index == listScreenshotsMovie.length - 1 ? 16.0 : 0.0,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    listScreenshotsMovie[index],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            },
+            itemCount: listScreenshotsMovie.length,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class WavyHeaderImage extends StatelessWidget {
+class BackdropImage extends StatelessWidget {
   final String backdropPath;
 
-  WavyHeaderImage(this.backdropPath);
+  BackdropImage(this.backdropPath);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +341,7 @@ class WavyHeaderImage extends StatelessWidget {
       child: Image.asset(
         backdropPath,
         height: mediaQuery.size.height / 2,
-        width: double.infinity,
+        width: mediaQuery.size.width,
         fit: BoxFit.cover,
       ),
       clipper: BottomWaveClipper(),
@@ -101,6 +368,6 @@ class BottomWaveClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
+    return true;
   }
 }
