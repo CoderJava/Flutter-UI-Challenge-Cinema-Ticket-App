@@ -3,12 +3,7 @@ import 'package:flutter_ui_cinemax/res/color_app.dart';
 import 'package:flutter_ui_cinemax/src/model/banner/banner_movie.dart';
 import 'package:flutter_ui_cinemax/src/model/category/category.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
