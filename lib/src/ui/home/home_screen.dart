@@ -12,7 +12,8 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-            top: mediaQuery.padding.top == 0 ? 16.0 : 0,
+            top: mediaQuery.padding.top == 0 ? 16.0 : 16.0,
+            bottom: mediaQuery.padding.bottom == 0 ? 16.0 : 0,
           ),
           child: Column(
             children: <Widget>[

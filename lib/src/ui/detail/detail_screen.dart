@@ -25,7 +25,7 @@ class DetailScreen extends StatelessWidget {
             Stack(
               children: <Widget>[
                 BackdropImage(bannerMovie.backdropPath),
-                _buildWidgetAppBar(mediaQuery),
+                _buildWidgetAppBar(mediaQuery, context),
                 _buildWidgetFloatingActionButton(mediaQuery),
                 _buildWidgetIconBuyAndShare(mediaQuery),
               ],
@@ -53,19 +53,24 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWidgetAppBar(MediaQueryData mediaQuery) {
+  Widget _buildWidgetAppBar(MediaQueryData mediaQuery, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
         left: 16.0,
-        top: mediaQuery.padding.top == 0 ? 16.0 : mediaQuery.padding.top,
+        top: mediaQuery.padding.top == 0 ? 16.0 : mediaQuery.padding.top + 8.0,
         right: 16.0,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Icon(
-            Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+              color: Colors.white,
+            ),
           ),
           Expanded(
             child: Image.asset(
