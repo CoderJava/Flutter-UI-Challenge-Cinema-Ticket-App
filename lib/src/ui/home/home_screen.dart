@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui_cinemax/res/color_app.dart';
 import 'package:flutter_ui_cinemax/src/model/banner/banner_movie.dart';
 import 'package:flutter_ui_cinemax/src/model/category/category.dart';
+import 'package:flutter_ui_cinemax/src/ui/detail/detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -98,45 +99,54 @@ class HomeScreen extends StatelessWidget {
           var bannerMovie = listBanner[index % 7];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                image: DecorationImage(
-                  image: AssetImage(bannerMovie.backdropPath),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Opacity(
-                    opacity: 0.3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                        color: Colors.black,
-                      ),
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return DetailScreen(bannerMovie);
+                  }),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  image: DecorationImage(
+                    image: AssetImage(bannerMovie.backdropPath),
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                      bottom: 16.0,
-                    ),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        bannerMovie.title,
-                        style: Theme.of(context).textTheme.title.merge(
-                              TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                        maxLines: 2,
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Opacity(
+                      opacity: 0.3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                        right: 16.0,
+                        bottom: 16.0,
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          bannerMovie.title,
+                          style: Theme.of(context).textTheme.title.merge(
+                                TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                          maxLines: 2,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
