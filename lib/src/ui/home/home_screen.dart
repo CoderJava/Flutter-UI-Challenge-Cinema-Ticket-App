@@ -16,10 +16,12 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               _buildWidgetAppBar(),
-              SizedBox(height: 20.0),
+              SizedBox(height: 24.0),
               _buildWidgetBanner(mediaQuery),
-              SizedBox(height: 20.0),
+              SizedBox(height: 24.0),
               _buildWidgetCategories(mediaQuery),
+              SizedBox(height: 24.0),
+              _buildWidgetMyList(mediaQuery, context),
             ],
           ),
         ),
@@ -203,6 +205,65 @@ class HomeScreen extends StatelessWidget {
           );
         },
         itemCount: listCategories.length,
+      ),
+    );
+  }
+
+  Widget _buildWidgetMyList(MediaQueryData mediaQuery, BuildContext context) {
+    var listPosterMyList = [
+      'assets/images/movie_1_my_list_backdrop_path.jpeg',
+      'assets/images/movie_2_my_list_backdrop_path.jpeg',
+      'assets/images/movie_3_my_list_backdrop_path.jpeg',
+      'assets/images/movie_4_my_list_backdrop_path.jpeg',
+      'assets/images/movie_5_my_list_backdrop_path.jpeg',
+    ];
+    return Container(
+      width: mediaQuery.size.width,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    'My list',
+                    style: Theme.of(context).textTheme.subhead.merge(
+                          TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                  ),
+                ),
+                Icon(Icons.chevron_right),
+              ],
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Container(
+            height: 200.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.0,
+                    right: index == listPosterMyList.length - 1 ? 16.0 : 0.0,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      listPosterMyList[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+              itemCount: listPosterMyList.length,
+            ),
+          ),
+        ],
       ),
     );
   }
