@@ -17,11 +17,19 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               _buildWidgetAppBar(),
               SizedBox(height: 24.0),
-              _buildWidgetBanner(mediaQuery),
-              SizedBox(height: 24.0),
-              _buildWidgetCategories(mediaQuery),
-              SizedBox(height: 24.0),
-              _buildWidgetMyList(mediaQuery, context),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildWidgetBanner(mediaQuery),
+                    SizedBox(height: 24.0),
+                    _buildWidgetCategories(mediaQuery),
+                    SizedBox(height: 24.0),
+                    _buildWidgetMyList(mediaQuery, context),
+                    SizedBox(height: 24.0),
+                    _buildWidgetPopular(mediaQuery, context),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -261,6 +269,64 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               itemCount: listPosterMyList.length,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWidgetPopular(MediaQueryData mediaQuery, BuildContext context) {
+    var listPosterPopular = [
+      'assets/images/movie_1_popular_backdrop_path.jpeg',
+      'assets/images/movie_2_popular_backdrop_path.jpeg',
+      'assets/images/movie_3_popular_backdrop_path.jpeg',
+      'assets/images/movie_4_popular_backdrop_path.jpeg',
+      'assets/images/movie_5_popular_backdrop_path.jpeg',
+    ];
+    return Container(
+      width: mediaQuery.size.width,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    'Popular on Netflix',
+                    style: Theme.of(context).textTheme.subhead.merge(
+                          TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                  ),
+                ),
+                Icon(Icons.chevron_right),
+              ],
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Container(
+            height: 200.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: 16.0,
+                    right: index == listPosterPopular.length - 1 ? 16.0 : 0.0,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      listPosterPopular[index],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
