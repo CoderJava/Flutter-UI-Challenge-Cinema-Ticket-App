@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui_cinemax/src/model/banner_movie.dart';
+import 'package:flutter_ui_cinemax/res/color_app.dart';
+import 'package:flutter_ui_cinemax/src/model/banner/banner_movie.dart';
+import 'package:flutter_ui_cinemax/src/model/category/category.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildWidgetAppBar(),
               SizedBox(height: 20.0),
               _buildWidgetBanner(mediaQuery),
+              SizedBox(height: 20.0),
+              _buildWidgetCategories(mediaQuery),
             ],
           ),
         ),
@@ -133,6 +137,77 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         itemCount: 700,
+      ),
+    );
+  }
+
+  Widget _buildWidgetCategories(MediaQueryData mediaQuery) {
+    var listCategories = [
+      Category(
+          title: 'Top Rated',
+          backdropPath: 'assets/images/top_rated_backdrop_path.jpeg'),
+      Category(
+          title: 'Upcoming',
+          backdropPath: 'assets/images/upcoming_backdrop_path.jpeg'),
+      Category(
+          title: 'Now Playing',
+          backdropPath: 'assets/images/now_playing_backdrop_path.jpeg'),
+      Category(
+          title: 'Popular',
+          backdropPath: 'assets/images/popular_backdrop_path.jpeg'),
+    ];
+    return Container(
+      width: mediaQuery.size.width,
+      height: 60.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          var category = listCategories[index];
+          return Padding(
+            padding: EdgeInsets.only(
+              left: 16.0,
+              right: index == listCategories.length - 1 ? 16.0 : 0.0,
+            ),
+            child: Container(
+              width: 200.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                image: DecorationImage(
+                  image: AssetImage(
+                    category.backdropPath,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Opacity(
+                    opacity: 0.8,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
+                        color: ColorApp.primaryDarkColor,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      category.title.toUpperCase(),
+                      style: Theme.of(context).textTheme.body1.merge(
+                            TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount: listCategories.length,
       ),
     );
   }
